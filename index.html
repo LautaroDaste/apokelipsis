@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>APOKÉLIPSIS SMP Participantes</title>
   <meta name="description" content="Lista de participantes del servidor APOKÉLIPSIS SMP.">
   <meta property="og:title" content="APOKÉLIPSIS SMP Participantes">
@@ -21,28 +23,20 @@
   <header class="hero wrap">
     <img class="logo" src="assets/logo.png" alt="APOKÉLIPSIS SMP">
     <h1>Participantes</h1>
-    <p>Estos son los invitados al servidor y el estado de su invitación.</p>
   </header>
 
   <main class="wrap">
-    <div class="stats" role="tablist" aria-label="Filtrar por estado">
-      <button class="stat active" data-filter="all" role="tab"><span class="n" id="c-all">–</span><span class="l">Invitados</span></button>
-      <button class="stat" data-filter="CONFIRMADO" role="tab"><span class="n" id="c-CONFIRMADO">–</span><span class="l">Confirmados</span></button>
-      <button class="stat" data-filter="PENDIENTE" role="tab"><span class="n" id="c-PENDIENTE">–</span><span class="l">Pendientes</span></button>
-      <button class="stat" data-filter="RECHAZADO" role="tab"><span class="n" id="c-RECHAZADO">–</span><span class="l">Rechazados</span></button>
+    <div class="stats">
+      <div class="stat" data-k="all"><span class="n" id="c-all">–</span><span class="l">Invitados</span></div>
+      <div class="stat" data-k="CONFIRMADO"><span class="n" id="c-CONFIRMADO">–</span><span class="l">Confirmados</span></div>
+      <div class="stat" data-k="PENDIENTE"><span class="n" id="c-PENDIENTE">–</span><span class="l">Pendientes</span></div>
+      <div class="stat" data-k="RECHAZADO"><span class="n" id="c-RECHAZADO">–</span><span class="l">Rechazados</span></div>
     </div>
-
-    <label class="search">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="Buscar participante…" autocomplete="off" aria-label="Buscar participante">
-    </label>
 
     <section class="grid" id="grid" aria-live="polite">
       <div class="empty">Cargando participantes…</div>
     </section>
   </main>
-
-  <footer>APOKÉLIPSIS SMP · Lista actualizada automáticamente</footer>
 
   <script src="assets/app.js"></script>
 </body>

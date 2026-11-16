@@ -24,5 +24,6 @@
 
 ## Usar el panel
 
-Entrá a `https://TU-USUARIO.github.io/apokelipsis/admin.html`, pegá el token y listo.
-El token queda guardado solo en ese navegador. Sin él, nadie puede modificar la lista.
+Entrá a `https://TU-USUARIO.github.io/apokelipsis/admin.html`, pegá el token y creá una contraseña.
+El token queda guardado **cifrado** (AES-256) solo en ese navegador; cada vez que entres te pide la contraseña.
+El panel se bloquea solo después de 15 minutos sin uso. Sin token, nadie puede modificar la lista.

@@ -3,144 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://raw.githubusercontent.com data: blob:; connect-src https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow, noarchive">
   <title>APOKÉLIPSIS SMP Participantes · Admin</title>
-  <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#120f1d">
   <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
   <link rel="icon" type="image/png" sizes="512x512" href="assets/icon.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Pixelify+Sans:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
-  <style>
-    .hero { padding-bottom: 6px; }
-    .hero .logo { width: min(440px, 100%); animation: none; }
-    .hero h1 { color: var(--pink); }
-    .panel {
-      background: linear-gradient(180deg, var(--card-2), var(--card));
-      border: 2px solid var(--line);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-      padding: 22px;
-      margin: 22px 0 40px;
-    }
-    .login { max-width: 480px; margin-left: auto; margin-right: auto; }
-    .login h2, .panel-head h2 { font-family: var(--pixel); font-weight: 600; margin: 0 0 6px; font-size: 22px; }
-    .login .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .login details { margin: 4px 0 16px; color: var(--muted); font-size: 14px; }
-    .login summary { cursor: pointer; color: var(--orange-2); font-weight: 700; }
-    .login ol { padding-left: 20px; margin: 8px 0 0; }
-    .login li { margin-bottom: 4px; }
-    .login code { background: var(--bg-2); padding: 1px 6px; border-radius: 6px; }
-
-    .panel-head {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-    .panel-head .sub { color: var(--muted); font-size: 14px; margin: 0; }
-    .head-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-
-    .admin-search { margin-bottom: 14px; }
-
-    .rows { display: flex; flex-direction: column; gap: 10px; }
-    .row {
-      display: grid;
-      grid-template-columns: 56px 1fr auto auto;
-      align-items: center;
-      gap: 14px;
-      padding: 10px 12px;
-      background: var(--bg-2);
-      border: 2px solid var(--line);
-      border-radius: 14px;
-    }
-    .row .avatar { width: 56px; height: 56px; margin: 0; border-radius: 14px; font-size: 22px; border-width: 2px; }
-    .row .who { min-width: 0; }
-    .row .who b { display: block; font-size: 17px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .row .who small { color: var(--muted); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .row .acts { display: flex; gap: 6px; }
-
-    .seg {
-      display: inline-flex;
-      background: var(--bg);
-      border: 2px solid var(--line);
-      border-radius: 12px;
-      padding: 3px;
-      gap: 3px;
-    }
-    .seg button {
-      appearance: none; border: 0; background: transparent; cursor: pointer;
-      padding: 7px 10px; border-radius: 9px;
-      font-family: var(--pixel); font-size: 13px; letter-spacing: .04em;
-      color: var(--muted);
-      transition: background .12s, color .12s;
-    }
-    .seg button:hover { color: var(--text); }
-    .seg button.on[data-s="CONFIRMADO"] { background: var(--ok-bg); color: var(--ok); box-shadow: inset 0 0 0 2px var(--ok); }
-    .seg button.on[data-s="PENDIENTE"] { background: var(--wait-bg); color: var(--wait); box-shadow: inset 0 0 0 2px var(--wait); }
-    .seg button.on[data-s="RECHAZADO"] { background: var(--no-bg); color: var(--no); box-shadow: inset 0 0 0 2px var(--no); }
-    .seg.big { display: flex; }
-    .seg.big button { flex: 1; padding: 11px 6px; font-size: 14px; }
-
-    /* Modal */
-    .modal {
-      position: fixed; inset: 0; z-index: 50;
-      background: rgba(8, 6, 16, .72);
-      backdrop-filter: blur(4px);
-      display: none; align-items: center; justify-content: center;
-      padding: 16px;
-    }
-    .modal.open { display: flex; }
-    .sheet {
-      width: 100%; max-width: 460px; max-height: calc(100vh - 32px); overflow: auto;
-      background: linear-gradient(180deg, var(--card-2), var(--card));
-      border: 2px solid var(--line); border-radius: 20px;
-      box-shadow: var(--shadow);
-      padding: 22px;
-      animation: pop .2s ease both;
-    }
-    .sheet h3 { font-family: var(--pixel); font-weight: 600; font-size: 22px; margin: 0 0 16px; }
-    .photo {
-      display: flex; align-items: center; gap: 16px; margin-bottom: 18px;
-    }
-    .photo .avatar {
-      width: 112px; height: 112px; margin: 0; flex-shrink: 0; cursor: pointer;
-      transition: filter .12s;
-    }
-    .photo .avatar:hover { filter: brightness(1.12); }
-    .photo.drag .avatar { box-shadow: 0 0 0 3px var(--orange-2), 0 6px 0 rgba(0,0,0,.4); }
-    .photo .ph-acts { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
-    .photo .hint { margin: 0; }
-    .sheet-foot { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
-
-    .toast {
-      position: fixed; left: 50%; bottom: 20px; z-index: 60;
-      transform: translate(-50%, 140%);
-      background: var(--card-2); border: 2px solid var(--line);
-      padding: 12px 18px; border-radius: 14px; box-shadow: var(--shadow);
-      font-weight: 700; max-width: calc(100vw - 32px);
-      transition: transform .25s ease;
-    }
-    .toast.show { transform: translate(-50%, 0); }
-    .toast.ok { border-color: var(--ok); }
-    .toast.err { border-color: var(--no); }
-
-    .saving {
-      display: none; align-items: center; gap: 8px; color: var(--orange-2); font-weight: 700; font-size: 14px;
-    }
-    .saving.on { display: inline-flex; }
-    .spin { width: 14px; height: 14px; border: 3px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    @media (max-width: 720px) {
-      .row { grid-template-columns: 56px 1fr auto; }
-      .row .acts { grid-row: 1; grid-column: 3; }
-      .row .seg { grid-row: 2; grid-column: 1 / -1; display: flex; }
-      .row .seg button { flex: 1; padding: 7px 2px; font-size: 12px; letter-spacing: 0; min-width: 0; }
-      .login .row2 { grid-template-columns: 1fr; gap: 0; }
-      .panel { padding: 16px; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/admin.css">
 </head>
 <body>
   <header class="hero wrap">
@@ -149,40 +23,68 @@
   </header>
 
   <main class="wrap">
-    <!-- Login / configuración -->
-    <section class="panel login" id="login" hidden>
-      <h2>Iniciar sesión</h2>
-      <p class="hint" style="margin-bottom:16px">Solo quien tenga la llave (token) del repositorio puede editar la lista. Se guarda únicamente en este navegador.</p>
-      <form id="loginForm">
+    <!-- 1) Primer ingreso: llave + contraseña -->
+    <section class="panel narrow" id="setup" hidden>
+      <h2>Configurar acceso</h2>
+      <p class="hint lead">Tu llave de GitHub se guarda <b>cifrada</b> en este navegador con una contraseña que solo vos sabés.</p>
+      <form id="setupForm" novalidate>
         <div class="row2">
-          <label class="field"><span>Usuario de GitHub</span><input id="owner" required autocomplete="off" spellcheck="false"></label>
-          <label class="field"><span>Repositorio</span><input id="repo" required autocomplete="off" spellcheck="false"></label>
+          <label class="field"><span>Usuario de GitHub</span><input id="owner" required maxlength="39" autocomplete="off" spellcheck="false"></label>
+          <label class="field"><span>Repositorio</span><input id="repo" required maxlength="100" autocomplete="off" spellcheck="false"></label>
         </div>
         <label class="field"><span>Token de acceso</span><input id="token" type="password" required autocomplete="off" spellcheck="false" placeholder="github_pat_…"></label>
         <details>
           <summary>¿Cómo consigo el token?</summary>
           <ol>
-            <li>Entrá a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>.</li>
-            <li>En <b>Repository access</b> elegí <b>Only select repositories</b> y seleccioná este repositorio.</li>
-            <li>En <b>Permissions → Repository permissions → Contents</b> elegí <b>Read and write</b>.</li>
+            <li>Entrá a <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">github.com/settings/personal-access-tokens/new</a>.</li>
+            <li><b>Repository access</b> → <b>Only select repositories</b> → este repositorio.</li>
+            <li><b>Permissions → Contents</b> → <b>Read and write</b>.</li>
             <li>Generá el token, copialo y pegalo acá.</li>
           </ol>
         </details>
-        <button class="btn primary" style="width:100%" id="loginBtn">Entrar</button>
+        <label class="field"><span>Creá una contraseña (mínimo 10 caracteres)</span><input id="p1" type="password" required minlength="10" autocomplete="new-password"></label>
+        <label class="field"><span>Repetí la contraseña</span><input id="p2" type="password" required minlength="10" autocomplete="new-password"></label>
+        <p class="err" id="setupErr" role="alert"></p>
+        <button class="btn primary full" id="setupBtn">Guardar y entrar</button>
       </form>
+    </section>
+
+    <!-- 2) Migración de un token guardado sin cifrar -->
+    <section class="panel narrow" id="migrate" hidden>
+      <h2>Protegé tu acceso</h2>
+      <p class="hint lead">Tu llave estaba guardada sin protección. Creá una contraseña para cifrarla; te la vamos a pedir cada vez que entres.</p>
+      <form id="migrateForm" novalidate>
+        <label class="field"><span>Nueva contraseña (mínimo 10 caracteres)</span><input id="m1" type="password" required minlength="10" autocomplete="new-password"></label>
+        <label class="field"><span>Repetí la contraseña</span><input id="m2" type="password" required minlength="10" autocomplete="new-password"></label>
+        <p class="err" id="migrateErr" role="alert"></p>
+        <button class="btn primary full" id="migrateBtn">Proteger y entrar</button>
+      </form>
+    </section>
+
+    <!-- 3) Desbloqueo -->
+    <section class="panel narrow center" id="unlock" hidden>
+      <img class="lock-ico" src="assets/icon.png" alt="">
+      <h2>Panel bloqueado</h2>
+      <p class="hint lead">Ingresá tu contraseña de administrador.</p>
+      <form id="unlockForm" novalidate>
+        <label class="field"><span>Contraseña</span><input id="pass" type="password" required autocomplete="current-password"></label>
+        <p class="err" id="unlockErr" role="alert"></p>
+        <button class="btn primary full" id="unlockBtn">Desbloquear</button>
+      </form>
+      <button class="linkbtn" id="resetBtn" type="button">Olvidé la contraseña / usar otra llave</button>
     </section>
 
     <!-- Panel principal -->
     <section class="panel" id="app" hidden>
       <div class="panel-head">
         <div>
-          <h2>Participantes <span id="total" style="color:var(--muted)"></span></h2>
+          <h2>Participantes <span id="total" class="muted"></span></h2>
           <p class="sub">Los cambios aparecen en la página pública en aproximadamente 1 minuto.</p>
         </div>
         <div class="head-actions">
           <span class="saving" id="saving"><span class="spin"></span>Guardando…</span>
-          <a class="btn ghost" href="./" target="_blank" rel="noopener">Ver página pública</a>
-          <button class="btn primary" id="addBtn">
+          <a class="btn ghost" href="./" target="_blank" rel="noopener noreferrer">Ver página pública</a>
+          <button class="btn primary" id="addBtn" type="button">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
             Agregar participante
           </button>
@@ -196,24 +98,25 @@
 
       <div class="rows" id="rows"></div>
 
-      <p style="text-align:right;margin:18px 0 0">
-        <button class="btn ghost" id="logoutBtn" style="font-size:14px;padding:8px 14px">Cerrar sesión en este dispositivo</button>
-      </p>
+      <div class="foot-actions">
+        <button class="btn ghost small" id="lockBtn" type="button">Bloquear</button>
+        <button class="btn ghost small" id="logoutBtn" type="button">Borrar acceso de este dispositivo</button>
+      </div>
     </section>
   </main>
 
   <!-- Modal agregar / editar -->
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
-    <form class="sheet" id="form">
+    <form class="sheet" id="form" novalidate>
       <h3 id="mTitle">Agregar participante</h3>
       <div class="photo" id="photoBox">
         <div class="avatar" id="mAvatar" title="Cambiar foto" tabindex="0">?</div>
         <div class="ph-acts">
           <button type="button" class="btn" id="pickBtn">Elegir foto</button>
-          <button type="button" class="btn ghost" id="clearPhoto" style="padding:7px 12px;font-size:14px">Quitar foto</button>
-          <p class="hint">Podés arrastrar una imagen acá. Se recorta en cuadrado automáticamente.</p>
+          <button type="button" class="btn ghost small" id="clearPhoto">Quitar foto</button>
+          <p class="hint">Podés arrastrar una imagen acá. Se recorta en cuadrado y se le borran los datos ocultos (ubicación, cámara).</p>
         </div>
-        <input type="file" id="file" accept="image/*" hidden>
+        <input type="file" id="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
       </div>
       <label class="field"><span>Nombre</span><input id="fName" required maxlength="40" autocomplete="off"></label>
       <label class="field"><span>Usuario de Minecraft o apodo (opcional)</span><input id="fNick" maxlength="40" autocomplete="off"></label>
@@ -232,7 +135,7 @@
     </form>
   </div>
 
-  <div class="toast" id="toast"></div>
+  <div class="toast" id="toast" role="status"></div>
 
   <script src="assets/admin.js"></script>
 </body>

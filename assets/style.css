@@ -97,13 +97,9 @@ button, input, select { font: inherit; color: inherit; }
   background: var(--card);
   border-radius: var(--radius);
   padding: 14px 12px;
-  cursor: pointer;
   text-align: left;
   box-shadow: 0 4px 0 rgba(0,0,0,.35);
-  transition: transform .12s, border-color .12s, background .12s;
 }
-.stat:hover { transform: translateY(-2px); }
-.stat:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,.35); }
 .stat .n {
   display: block;
   font-family: var(--pixel);
@@ -119,14 +115,11 @@ button, input, select { font: inherit; color: inherit; }
   text-transform: uppercase;
   color: var(--muted);
 }
-.stat[data-filter="all"] .n { color: var(--orange-2); }
-.stat[data-filter="CONFIRMADO"] .n { color: var(--ok); }
-.stat[data-filter="PENDIENTE"] .n { color: var(--wait); }
-.stat[data-filter="RECHAZADO"] .n { color: var(--no); }
-.stat.active { border-color: var(--orange); background: var(--card-2); }
-.stat[data-filter="CONFIRMADO"].active { border-color: var(--ok); }
-.stat[data-filter="PENDIENTE"].active { border-color: var(--wait); }
-.stat[data-filter="RECHAZADO"].active { border-color: var(--no); }
+.stat[data-k="all"] .n { color: var(--orange-2); }
+.stat[data-k="CONFIRMADO"] .n { color: var(--ok); }
+.stat[data-k="PENDIENTE"] .n { color: var(--wait); }
+.stat[data-k="RECHAZADO"] .n { color: var(--no); }
+.stats { margin-bottom: 26px; }
 
 .search {
   position: relative;

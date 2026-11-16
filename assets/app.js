@@ -1,54 +1,71 @@
 (function () {
+  "use strict";
+  const STATUSES = ["CONFIRMADO", "PENDIENTE", "RECHAZADO"];
   const ORDER = { CONFIRMADO: 0, PENDIENTE: 1, RECHAZADO: 2 };
+  const AVATAR_RE = /^avatars\/[a-z0-9-]{1,80}\.(webp|jpg|png)$/;
   const grid = document.getElementById("grid");
-  const q = document.getElementById("q");
-  let people = [];
-  let filter = "all";
 
-  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const initials = (name) => name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase() || "?";
-  const norm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-
-  function render() {
-    const term = norm(q.value.trim());
-    const list = people
-      .filter((p) => filter === "all" || p.status === filter)
-      .filter((p) => !term || norm(p.name).includes(term) || norm(p.nick).includes(term))
-      .sort((a, b) => (ORDER[a.status] - ORDER[b.status]) || a.name.localeCompare(b.name, "es"));
-
-    if (!list.length) {
-      grid.innerHTML = `<div class="empty"><img src="assets/icon.png" alt="">${
-        people.length ? "No hay participantes que coincidan." : "Todavía no hay participantes en la lista."
-      }</div>`;
-      return;
-    }
-
-    grid.innerHTML = list.map((p, i) => `
-      <article class="card s-${esc(p.status)}" style="animation-delay:${Math.min(i, 20) * 30}ms">
-        <div class="avatar">${p.avatar
-          ? `<img src="${esc(p.avatar)}" alt="" loading="lazy">`
-          : esc(initials(p.name))}</div>
-        <h2 class="name">${esc(p.name)}</h2>
-        ${p.nick ? `<p class="nick">${esc(p.nick)}</p>` : ""}
-        <span class="badge ${esc(p.status)}">${esc(p.status)}</span>
-      </article>`).join("");
+  // Treat the JSON as untrusted: keep only known fields with known shapes.
+  function clean(p) {
+    if (!p || typeof p !== "object") return null;
+    const name = typeof p.name === "string" ? p.name.trim().slice(0, 40) : "";
+    if (!name || !STATUSES.includes(p.status)) return null;
+    return {
+      name,
+      nick: typeof p.nick === "string" ? p.nick.trim().slice(0, 40) : "",
+      status: p.status,
+      avatar: typeof p.avatar === "string" && AVATAR_RE.test(p.avatar) ? p.avatar : "",
+    };
   }
 
-  function counts() {
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  const initials = (name) => name.split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase() || "?";
+
+  function empty(msg) {
+    const box = el("div", "empty");
+    const img = el("img");
+    img.src = "assets/icon.png";
+    img.alt = "";
+    box.append(img, msg);
+    grid.replaceChildren(box);
+  }
+
+  function render(people) {
     const c = { all: people.length, CONFIRMADO: 0, PENDIENTE: 0, RECHAZADO: 0 };
-    people.forEach((p) => { if (p.status in c) c[p.status]++; });
-    Object.entries(c).forEach(([k, v]) => { document.getElementById("c-" + k).textContent = v; });
+    people.forEach((p) => c[p.status]++);
+    Object.keys(c).forEach((k) => { document.getElementById("c-" + k).textContent = c[k]; });
+
+    if (!people.length) return empty("Todavía no hay participantes en la lista.");
+
+    people.sort((a, b) => (ORDER[a.status] - ORDER[b.status]) || a.name.localeCompare(b.name, "es"));
+    grid.replaceChildren(...people.map((p, i) => {
+      const card = el("article", "card s-" + p.status);
+      card.style.animationDelay = Math.min(i, 20) * 30 + "ms";
+      const av = el("div", "avatar");
+      if (p.avatar) {
+        const img = el("img");
+        img.src = p.avatar;
+        img.alt = "";
+        img.loading = "lazy";
+        img.addEventListener("error", () => av.replaceChildren(initials(p.name)), { once: true });
+        av.append(img);
+      } else {
+        av.textContent = initials(p.name);
+      }
+      card.append(av, el("h2", "name", p.name));
+      if (p.nick) card.append(el("p", "nick", p.nick));
+      card.append(el("span", "badge " + p.status, p.status));
+      return card;
+    }));
   }
 
-  document.querySelectorAll(".stat").forEach((b) => b.addEventListener("click", () => {
-    filter = b.dataset.filter;
-    document.querySelectorAll(".stat").forEach((x) => x.classList.toggle("active", x === b));
-    render();
-  }));
-  q.addEventListener("input", render);
-
-  fetch("data/participants.json?t=" + Date.now(), { cache: "no-store" })
+  fetch("data/participants.json?t=" + Date.now(), { cache: "no-store", credentials: "omit" })
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then((data) => { people = Array.isArray(data) ? data : []; counts(); render(); })
-    .catch(() => { grid.innerHTML = `<div class="empty">No se pudo cargar la lista. Probá recargar la página.</div>`; });
+    .then((data) => render((Array.isArray(data) ? data : []).map(clean).filter(Boolean).slice(0, 500)))
+    .catch(() => empty("No se pudo cargar la lista. Probá recargar la página."));
 })();
