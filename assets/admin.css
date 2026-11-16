@@ -128,3 +128,4 @@
   .row2 { grid-template-columns: 1fr; gap: 0; }
   .panel { padding: 16px; }
 }
+.saving.live { color: var(--ok); }

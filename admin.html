@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://raw.githubusercontent.com data: blob:; connect-src https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://raw.githubusercontent.com data: blob:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex, nofollow, noarchive">
   <title>APOKÉLIPSIS SMP Participantes · Admin</title>
@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Pixelify+Sans:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css">
-  <link rel="stylesheet" href="assets/admin.css">
+  <link rel="stylesheet" href="assets/style.css?v=4">
+  <link rel="stylesheet" href="assets/admin.css?v=4">
 </head>
 <body>
   <header class="hero wrap">
@@ -83,6 +83,8 @@
         </div>
         <div class="head-actions">
           <span class="saving" id="saving"><span class="spin"></span>Guardando…</span>
+          <span class="saving" id="publishing"><span class="spin"></span>Publicando en la página…</span>
+          <span class="saving live" id="published">✓ Ya se ve en la página pública</span>
           <a class="btn ghost" href="./" target="_blank" rel="noopener noreferrer">Ver página pública</a>
           <button class="btn primary" id="addBtn" type="button">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
@@ -137,6 +139,6 @@
 
   <div class="toast" id="toast" role="status"></div>
 
-  <script src="assets/admin.js"></script>
+  <script src="assets/admin.js?v=4"></script>
 </body>
 </html>

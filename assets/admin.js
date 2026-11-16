@@ -171,6 +171,46 @@
     if (sha) body.sha = sha;
     const r = await gh(`/contents/${DATA_PATH}`, { method: "PUT", body: JSON.stringify(body) });
     sha = r.content.sha;
+    lastSaved = JSON.stringify(out);
+  }
+
+  // ---------- Publish watcher: confirms the public page already shows the change ----------
+  let lastSaved = null;
+  let publishTarget = null;
+  let publishTimer = null;
+  function stopWatch() {
+    publishTarget = null;
+    clearTimeout(publishTimer);
+    $("publishing").classList.remove("on");
+    $("published").classList.remove("on");
+  }
+  function watchPublish(target) {
+    stopWatch();
+    publishTarget = target;
+    $("publishing").classList.add("on");
+    const start = Date.now();
+    const tick = async () => {
+      if (publishTarget !== target) return;
+      try {
+        const r = await fetch(`${DATA_PATH}?t=${Date.now()}`, { cache: "no-store", credentials: "omit" });
+        if (r.ok && JSON.stringify(await r.json()) === target) {
+          if (publishTarget !== target) return;
+          $("publishing").classList.remove("on");
+          $("published").classList.add("on");
+          toast("✓ Ya se ve en la página pública");
+          publishTimer = setTimeout(() => $("published").classList.remove("on"), 10000);
+          return;
+        }
+      } catch (e) { /* reintenta */ }
+      if (publishTarget !== target) return;
+      if (Date.now() - start > 5 * 60 * 1000) {
+        $("publishing").classList.remove("on");
+        toast("GitHub está tardando en publicar. Revisá la página en unos minutos.", "err");
+        return;
+      }
+      publishTimer = setTimeout(tick, 5000);
+    };
+    publishTimer = setTimeout(tick, 4000);
   }
 
   async function uploadAvatar(path, dataUrl, name) {
@@ -188,6 +228,7 @@
 
   function run(task, okMsg) {
     pending++;
+    stopWatch();
     $("saving").classList.add("on");
     queue = queue
       .then(task)
@@ -201,7 +242,11 @@
         try { await fetchData(); } catch (x) {}
         render();
       })
-      .finally(() => { if (--pending === 0) $("saving").classList.remove("on"); });
+      .finally(() => {
+        if (--pending !== 0) return;
+        $("saving").classList.remove("on");
+        if (session && lastSaved) watchPublish(lastSaved);
+      });
     return queue;
   }
 
@@ -437,7 +482,7 @@
 
   function lock(reason) {
     if (!session) return;
-    session = null; people = []; sha = null;
+    session = null; people = []; sha = null; lastSaved = null; stopWatch();
     closeModal();
     $("rows").replaceChildren();
     $("q").value = "";
@@ -451,7 +496,7 @@
     if (ask && !confirm("Se va a borrar la llave guardada en este dispositivo. Vas a necesitar un token para volver a entrar. ¿Continuar?")) return;
     const v = ls.get(VAULT_KEY) || ls.get(LEGACY_KEY) || {};
     ls.del(VAULT_KEY); ls.del(LEGACY_KEY); ls.del(FAIL_KEY);
-    session = null; people = []; sha = null;
+    session = null; people = []; sha = null; lastSaved = null; stopWatch();
     closeModal();
     showSetup(v.owner, v.repo);
   }
