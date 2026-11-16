@@ -38,7 +38,14 @@
     "id": "mwiqs0p156aw5",
     "name": "FranPons",
     "nick": "",
-    "status": "CONFIRMADO",
+    "status": "PENDIENTE",
     "avatar": "avatars/mwiqs0p156aw5-mwiqs0p1.webp"
+  },
+  {
+    "id": "mwiqs8h6pk01v",
+    "name": "Anto",
+    "nick": "",
+    "status": "PENDIENTE",
+    "avatar": "avatars/mwiqs8h6pk01v-mwiqs8h6.webp"
   }
 ]
