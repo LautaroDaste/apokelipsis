@@ -46,7 +46,7 @@
       card.style.animationDelay = Math.min(i, 20) * 30 + "ms";
       const av = el("div", "avatar");
       if (p.avatar) {
-        const img = el("img");
+        const img = el("img", /-px\.png$/.test(p.avatar) ? "px" : null);
         img.src = p.avatar;
         img.alt = "";
         img.loading = "lazy";

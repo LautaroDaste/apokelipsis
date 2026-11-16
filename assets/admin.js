@@ -256,10 +256,11 @@
     if (!p.avatar) return "";
     return `https://raw.githubusercontent.com/${session.owner}/${session.repo}/HEAD/${p.avatar}`;
   }
+  const isPx = (path) => /-px\.png$/.test(path || "");
   function fillAvatar(box, p) {
     const u = avatarUrl(p);
     if (!u) { box.textContent = initials(p.name); return; }
-    const img = el("img");
+    const img = el("img", isPx(p.avatar) ? "px" : "");
     img.alt = "";
     img.addEventListener("error", () => {
       if (p.avatar && img.src.indexOf("raw.githubusercontent.com") !== -1) img.src = p.avatar;
@@ -351,7 +352,10 @@
     let src = "";
     if (draftPhoto && draftPhoto !== "remove") src = draftPhoto.dataUrl;
     else if (!draftPhoto && editing && editing.avatar) src = avatarUrl(editing);
-    if (src) { const img = el("img"); img.alt = ""; img.src = src; a.replaceChildren(img); }
+    if (src) {
+      const img = el("img", (draftPhoto && draftPhoto.pixel) || (!draftPhoto && editing && isPx(editing.avatar)) ? "px" : "");
+      img.alt = ""; img.src = src; a.replaceChildren(img);
+    }
     else a.textContent = initials($("fName").value);
     $("clearPhoto").hidden = !src;
   }
@@ -398,6 +402,9 @@
   }
 
   // Re-encoding through a canvas strips EXIF/GPS metadata and any embedded payloads.
+  // Small images (pixel art, e.g. 40×40) are enlarged by an exact integer factor with
+  // nearest-neighbour sampling and saved as lossless PNG, so every pixel stays a crisp square.
+  const PIXEL_MAX = 128;
   function squareImage(file, size) {
     return new Promise((resolve, reject) => {
       const url = URL.createObjectURL(file);
@@ -405,12 +412,23 @@
       img.onload = () => {
         const s = Math.min(img.naturalWidth, img.naturalHeight);
         if (!s) { URL.revokeObjectURL(url); return reject(); }
+        if (s <= PIXEL_MAX) {
+          const k = Math.ceil(size / s);
+          const c = document.createElement("canvas");
+          c.width = c.height = s * k;
+          const ctx = c.getContext("2d");
+          ctx.imageSmoothingEnabled = false;
+          ctx.drawImage(img, Math.floor((img.naturalWidth - s) / 2), Math.floor((img.naturalHeight - s) / 2), s, s, 0, 0, s * k, s * k);
+          URL.revokeObjectURL(url);
+          const dataUrl = c.toDataURL("image/png");
+          if (dataUrl.length <= 600000) return resolve({ dataUrl, ext: "png", pixel: true });
+        }
         const c = document.createElement("canvas");
         c.width = c.height = size;
         const ctx = c.getContext("2d");
         ctx.imageSmoothingQuality = "high";
         ctx.drawImage(img, (img.naturalWidth - s) / 2, (img.naturalHeight - s) / 2, s, s, 0, 0, size, size);
-        URL.revokeObjectURL(url);
+        try { URL.revokeObjectURL(url); } catch (e) {}
         let q = 0.86, dataUrl, ext = "webp";
         do {
           dataUrl = c.toDataURL("image/webp", q);
@@ -440,7 +458,7 @@
     let newAvatarPath = null;
     if (photo === "remove") { p.avatar = ""; delete p._preview; }
     else if (photo) {
-      newAvatarPath = `avatars/${p.id}-${Date.now().toString(36)}.${photo.ext}`;
+      newAvatarPath = `avatars/${p.id}-${Date.now().toString(36)}${photo.pixel ? "-px" : ""}.${photo.ext}`;
       p.avatar = newAvatarPath;
       p._preview = photo.dataUrl;
     }
