@@ -304,3 +304,5 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+.hero + main .grid { margin-top: 14px; }

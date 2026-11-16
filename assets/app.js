@@ -36,13 +36,11 @@
   }
 
   function render(people) {
-    const c = { all: people.length, CONFIRMADO: 0, PENDIENTE: 0, RECHAZADO: 0 };
-    people.forEach((p) => c[p.status]++);
-    Object.keys(c).forEach((k) => { document.getElementById("c-" + k).textContent = c[k]; });
-
     if (!people.length) return empty("Todavía no hay participantes en la lista.");
 
-    people.sort((a, b) => (ORDER[a.status] - ORDER[b.status]) || a.name.localeCompare(b.name, "es"));
+    // Primero por estado (Confirmados → Pendientes → Rechazados), luego alfabético.
+    people.sort((a, b) => (ORDER[a.status] - ORDER[b.status]) ||
+      a.name.localeCompare(b.name, "es", { sensitivity: "base", numeric: true }));
     grid.replaceChildren(...people.map((p, i) => {
       const card = el("article", "card s-" + p.status);
       card.style.animationDelay = Math.min(i, 20) * 30 + "ms";
