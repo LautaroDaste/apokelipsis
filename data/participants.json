@@ -257,5 +257,12 @@
     "nick": "",
     "status": "CONFIRMADO",
     "avatar": "avatars/mwjml63kwlsqb-mwjml63k-px.png"
+  },
+  {
+    "id": "mwmalykajkefk",
+    "name": "Nicki",
+    "nick": "",
+    "status": "PENDIENTE",
+    "avatar": "avatars/mwmalykajkefk-mwmalyka-px.png"
   }
 ]
