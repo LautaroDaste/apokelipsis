@@ -14,6 +14,7 @@
       name,
       nick: typeof p.nick === "string" ? p.nick.trim().slice(0, 40) : "",
       status: p.status,
+      paid: p.paid === true,
       avatar: typeof p.avatar === "string" && AVATAR_RE.test(p.avatar) ? p.avatar : "",
     };
   }
@@ -58,6 +59,7 @@
       card.append(av, el("h2", "name", p.name));
       if (p.nick) card.append(el("p", "nick", p.nick));
       card.append(el("span", "badge " + p.status, p.status));
+      if (p.status === "CONFIRMADO") card.append(el("span", "badge pay " + (p.paid ? "PAGO" : "NOPAGO"), p.paid ? "PAGÓ" : "NO PAGÓ"));
       return card;
     }));
   }

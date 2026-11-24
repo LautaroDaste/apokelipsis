@@ -107,6 +107,7 @@
       name,
       nick: text(p.nick, 40),
       status: p.status,
+      paid: p.paid === true,
       avatar: typeof p.avatar === "string" && AVATAR_RE.test(p.avatar) ? p.avatar : "",
     };
   }
@@ -166,7 +167,7 @@
   }
 
   async function saveData(message) {
-    const out = people.map(({ id, name, nick, status, avatar }) => ({ id, name, nick, status, avatar }));
+    const out = people.map(({ id, name, nick, status, paid, avatar }) => ({ id, name, nick, status, paid, avatar }));
     const body = { message, content: b64encodeUtf8(JSON.stringify(out, null, 2) + "\n") };
     if (sha) body.sha = sha;
     const r = await gh(`/contents/${DATA_PATH}`, { method: "PUT", body: JSON.stringify(body) });
@@ -299,6 +300,11 @@
         seg.append(b);
       });
       const acts = el("div", "acts");
+      if (p.status === "CONFIRMADO") {
+        const pay = el("button", "btn small pay " + (p.paid ? "on" : ""), p.paid ? "PAGÓ" : "NO PAGÓ");
+        pay.type = "button"; pay.dataset.act = "paid"; pay.title = "Cambiar pago";
+        acts.append(pay);
+      }
       const ed = el("button", "btn icon");
       ed.type = "button"; ed.dataset.act = "edit"; ed.title = "Editar"; ed.setAttribute("aria-label", "Editar " + p.name);
       ed.append(svgIcon(["M12 20h9", "M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"]));
@@ -324,6 +330,10 @@
       p.status = s;
       render();
       run(() => saveData(`${p.name}: ${s}`), `${p.name} → ${s}`);
+    } else if (act === "paid") {
+      p.paid = !p.paid;
+      render();
+      run(() => saveData(`${p.name}: ${p.paid ? "pagó" : "no pagó"}`), `${p.name} → ${p.paid ? "PAGÓ" : "NO PAGÓ"}`);
     } else if (act === "edit") {
       openModal(p);
     } else if (act === "del") {
