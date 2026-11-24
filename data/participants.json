@@ -4,6 +4,7 @@
     "name": "Lautiams",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": true,
     "avatar": "avatars/mwiq57rzr42e0-mwiqljyr.webp"
   },
   {
@@ -11,6 +12,7 @@
     "name": "Gigi",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiqml80bkcmi-mwiqml80.webp"
   },
   {
@@ -18,6 +20,7 @@
     "name": "Facy",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiqrdns1cml1-mwiqrdns.webp"
   },
   {
@@ -25,6 +28,7 @@
     "name": "Jiku",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiqrlsp554wa-mwiqrlsp.webp"
   },
   {
@@ -32,6 +36,7 @@
     "name": "Octa",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiqrt5wtlufn-mwiqrt5w.webp"
   },
   {
@@ -39,6 +44,7 @@
     "name": "FranPons",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiqs0p156aw5-mwiqs0p1.webp"
   },
   {
@@ -46,6 +52,7 @@
     "name": "Anto",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiqs8h6pk01v-mwiqs8h6.webp"
   },
   {
@@ -53,6 +60,7 @@
     "name": "NicoBtez",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiqsmgvou9xn-mwiqsmgv.webp"
   },
   {
@@ -60,6 +68,7 @@
     "name": "Emapro",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiqsxthehz5w-mwiqsxth.webp"
   },
   {
@@ -67,6 +76,7 @@
     "name": "Janu",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiqw58vj1lrg-mwiqw58v.webp"
   },
   {
@@ -74,6 +84,7 @@
     "name": "Teka",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiqxn6wpfq6y-mwiqxn6w.webp"
   },
   {
@@ -81,6 +92,7 @@
     "name": "Ramipro",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwisja55l3zi6-mwisja55.webp"
   },
   {
@@ -88,6 +100,7 @@
     "name": "Matieldracu",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwisjjcuw7aa9-mwisjjcu.webp"
   },
   {
@@ -95,6 +108,7 @@
     "name": "Lukew4n",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwisjyqttb5uj-mwjgdz1b-px.png"
   },
   {
@@ -102,6 +116,7 @@
     "name": "Sergio",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwisk803du0tx-mwisk803.webp"
   },
   {
@@ -109,6 +124,7 @@
     "name": "Thiago Pinza",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwisl24aplgdj-mwisl24a.webp"
   },
   {
@@ -116,6 +132,7 @@
     "name": "Skay",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwislro1zz6py-mwislro1.webp"
   },
   {
@@ -123,6 +140,7 @@
     "name": "Nane",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiswpd14r7b1-mwiswpd1.webp"
   },
   {
@@ -130,6 +148,7 @@
     "name": "Stanley",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwisx1cb2wl1i-mwisx1cb.webp"
   },
   {
@@ -137,6 +156,7 @@
     "name": "Melo",
     "nick": "",
     "status": "RECHAZADO",
+    "paid": false,
     "avatar": "avatars/mwisyfb4xa6gt-mwisyfb4.webp"
   },
   {
@@ -144,6 +164,7 @@
     "name": "Chomi",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwit0cllzlxzj-mwit0cll.webp"
   },
   {
@@ -151,6 +172,7 @@
     "name": "Alan",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwit0jpw9ypt1-mwit0jpw.webp"
   },
   {
@@ -158,6 +180,7 @@
     "name": "Maca",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwit0p4qgoisv-mwit0p4q.webp"
   },
   {
@@ -165,6 +188,7 @@
     "name": "Manu",
     "nick": "",
     "status": "RECHAZADO",
+    "paid": false,
     "avatar": "avatars/mwit1yz2mgfq2-mwit1yz2.webp"
   },
   {
@@ -172,6 +196,7 @@
     "name": "Coni",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwit768wqw7gq-mwit768w.webp"
   },
   {
@@ -179,6 +204,7 @@
     "name": "Agusgi",
     "nick": "",
     "status": "RECHAZADO",
+    "paid": false,
     "avatar": "avatars/mwix21gvwlxqn-mwix21gv.webp"
   },
   {
@@ -186,6 +212,7 @@
     "name": "Nahuel",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwix4b0si36tu-mwix4b0s.webp"
   },
   {
@@ -193,6 +220,7 @@
     "name": "Heratok",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiy1owz9g38j-mwiy1owz.webp"
   },
   {
@@ -200,6 +228,7 @@
     "name": "Nat",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwiy6gurtytk5-mwiy6gur.webp"
   },
   {
@@ -207,6 +236,7 @@
     "name": "Tere",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwjelc71xtorj-mwjelc71-px.png"
   },
   {
@@ -214,6 +244,7 @@
     "name": "Lotu",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwjeywwrowucn-mwjeywwr-px.png"
   },
   {
@@ -221,6 +252,7 @@
     "name": "Male",
     "nick": "",
     "status": "RECHAZADO",
+    "paid": false,
     "avatar": "avatars/mwjf10v5r38or-mwjf10v5-px.png"
   },
   {
@@ -228,6 +260,7 @@
     "name": "Maxi",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwjl1dmhinfhq-mwjl1dmh-px.png"
   },
   {
@@ -235,6 +268,7 @@
     "name": "Chino",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwjlgd6lyi764-mwjlgd6l-px.png"
   },
   {
@@ -242,6 +276,7 @@
     "name": "Asta",
     "nick": "",
     "status": "PENDIENTE",
+    "paid": false,
     "avatar": "avatars/mwjljcgrz2rf5-mwjljcgr-px.png"
   },
   {
@@ -249,6 +284,7 @@
     "name": "Esckia",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwjlmhjn4o74g-mwjlmhjn-px.png"
   },
   {
@@ -256,6 +292,7 @@
     "name": "Cele",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwjml63kwlsqb-mwjml63k-px.png"
   },
   {
@@ -263,6 +300,7 @@
     "name": "Nicki",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwmalykajkefk-mwmalyka-px.png"
   },
   {
@@ -270,6 +308,7 @@
     "name": "Pipetas",
     "nick": "",
     "status": "CONFIRMADO",
+    "paid": false,
     "avatar": "avatars/mwnuu109sbkl8-mwnuu109-px.png"
   }
 ]
